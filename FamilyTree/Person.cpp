@@ -14,8 +14,8 @@ Person::Person(wstring name, wstring bdate) {
 
 wstring Person::description() {
     if (name != L"null") {
-        wstring dmessage = ddate == L"" ? L"" : L" и умер/умерла " + ddate;
-        wstring message = name + L" родился/родилась " + bdate + dmessage + L"\n";
+        wstring dmessage = ddate == L"" ? L"" : L" alive/dead " + ddate;
+        wstring message = name + L" alive/dead " + bdate + dmessage + L"\n";
         return message;
     }
     else {

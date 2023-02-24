@@ -16,4 +16,4 @@ public:
     void add_person(Person p); // Add a person without specifying parents - at the top level
     void print_description(); // Print a text description of the tree state
     void show(int width, int height); // Display the tree as a graphical representation
-}; #pragma once
+};

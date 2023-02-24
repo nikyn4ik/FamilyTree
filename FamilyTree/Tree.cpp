@@ -1,5 +1,8 @@
 #include "Tree.h"
+#include <iostream>
 #include <string>
+
+using namespace std;
 
 Tree::Tree()
 {
@@ -41,28 +44,35 @@ void Tree::print_description()
     for (int i = 0; i < tree.size(); i++)
     {
         vector<pair<Person, pair<Person, Person>>> family = tree[i];
-        cout << "Family " << i + 1 << ":\n";
+        cout << "Generation " << i + 1 << ":\n";
         for (int j = 0; j < family.size(); j++)
         {
-            Person p = family[j].first;
+            Person p = family[j].first; 
+            Person parents = family[j].second.first;
             Person father = family[j].second.first;
             Person mother = family[j].second.second;
 
-            cout << p.description();
+            wcout << p.description();
 
-            if (father.description() != "")
+
+            if (parents.description().empty())
             {
-                cout << "Father: " << father.short_description() << "\n";
+                wcout << "Parents: " "\n";
             }
 
-            if (mother.description() != "")
+            if (father.description().empty())
             {
-                cout << "Mother: " << mother.short_description() << "\n";
+                wcout << "Father: " << father.short_description() << "\n";
+            }
+
+            if (mother.description().empty())
+            {
+                wcout << "Mother: " << mother.short_description() << "\n";
             }
 
             if (j != family.size() - 1)
             {
-                cout << "----\n";
+                wcout << "----\n";
             }
         }
         cout << "\n";
