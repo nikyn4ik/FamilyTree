@@ -39,35 +39,27 @@ void Tree::add_person(Person p)
     tree.push_back(family);
 }
 
+
 void Tree::print_description()
 {
     for (int i = 0; i < tree.size(); i++)
     {
         vector<pair<Person, pair<Person, Person>>> family = tree[i];
-        cout << "Generation " << i + 1 << ":\n";
+        cout << "Generation " << i << ":\n";
         for (int j = 0; j < family.size(); j++)
         {
-            Person p = family[j].first; 
-            Person parents = family[j].second.first;
-            Person father = family[j].second.first;
-            Person mother = family[j].second.second;
+            Person p = family[j].first;
+            Person parents = family[j].second;
 
             wcout << p.description();
 
-
-            if (parents.description().empty())
+            if (parents.first.description().empty() && parents.second.description().empty())
             {
-                wcout << "Parents: " "\n";
+                wcout << "Parents: " << "\n";
             }
-
-            if (father.description().empty())
+            else
             {
-                wcout << "Father: " << father.short_description() << "\n";
-            }
-
-            if (mother.description().empty())
-            {
-                wcout << "Mother: " << mother.short_description() << "\n";
+                wcout << "Parents: " << parents.first.short_description() << ", " << parents.second.short_description() << "\n";
             }
 
             if (j != family.size() - 1)
