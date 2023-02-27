@@ -39,40 +39,41 @@ void Tree::add_person(Person p)
     tree.push_back(family);
 }
 
-
 void Tree::print_description()
 {
     for (int i = 0; i < tree.size(); i++)
     {
         vector<pair<Person, pair<Person, Person>>> family = tree[i];
-        cout << "Generation " << i << ":\n";
+        cout << "Generation " << i << ":" << endl;
         for (int j = 0; j < family.size(); j++)
         {
             Person p = family[j].first;
-            Person parents = family[j].second;
+            pair<Person, Person> parents = family[j].second;
 
-            wcout << p.description();
-
-            if (parents.first.description().empty() && parents.second.description().empty())
-            {
-                wcout << "Parents: " << "\n";
+            if (i == 0) {
+                cout << "  t.add_person(Person(L\"" << p.get_name() << "\", L\"" << p.get_birth_date() << "\"));" << endl;
             }
-            else
-            {
-                wcout << "Parents: " << parents.first.short_description() << ", " << parents.second.short_description() << "\n";
+            else {
+                cout << "t.add_person(Person(L\"" << p.get_name() << "\", L\"" << p.get_birth_date() << "\"), " << endl;
+                cout << "  Parents: " << endl;
+                if (!parents.first.get_name().empty() || !parents.first.get_birth_date().empty()) {
+                    cout << "    Person(L\"" << parents.first.get_name() << "\", L\"" << parents.first.get_birth_date() << "\")";
+                }
+                if (!parents.second.get_name().empty() || !parents.second.get_birth_date().empty()) {
+                    cout << ", " << endl << "    Person(L\"" << parents.second.get_name() << "\", L\"" << parents.second.get_birth_date() << "\")";
+                }
+                cout << ");" << endl;
             }
 
             if (j != family.size() - 1)
             {
-                wcout << "----\n";
+                cout << endl;
             }
         }
-        cout << "\n";
+        cout << endl;
     }
 }
 
 void Tree::show(int width, int height)
 {
-    // implementation for visualizing the tree using a graphics library (e.g. SFML)
-    // omitted for brevity
 }
