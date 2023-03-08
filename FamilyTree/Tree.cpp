@@ -1,10 +1,13 @@
 #include "Tree.h"
 #include <iostream>
 #include <string>
+#include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Window.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/VideoMode.hpp>
 
 using namespace std;
 
@@ -91,7 +94,7 @@ void Tree::print_description()
 
 void Tree::show(int width, int height)
 {
-    sf::RenderWindow window(sf::VideoMode(width, height), "Family Tree");
+    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(width, height)), "Family Tree");
 
     //sf::Font font;
     //if (!font.loadFromFile("arial.ttf"))
