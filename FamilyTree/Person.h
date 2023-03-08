@@ -4,14 +4,15 @@ using namespace std;
 
 class Person {
 private:
-    wstring name;
-    wstring bdate;
-    wstring ddate;
+    string name;
+    string bdate;
+    string ddate;
 public:
-    Person(wstring name, wstring bdate, wstring ddate);
-    Person(wstring name, wstring bdate);
-    wstring description();
-    wstring short_description();
-    wstring get_name();
+    Person(string name, string bdate, string ddate);
+    Person(string name, string bdate);
+    string description();
+    string short_description();
+    string get_name();
+    string get_birth_date();
     bool operator==(Person& other);
 };

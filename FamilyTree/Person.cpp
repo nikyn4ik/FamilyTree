@@ -1,35 +1,40 @@
 #include "Person.h"
 
-Person::Person(wstring name, wstring bdate, wstring ddate) {
+Person::Person(string name, string bdate, string ddate) {
     this->name = name;
     this->bdate = bdate;
     this->ddate = ddate;
 }
 
-Person::Person(wstring name, wstring bdate) {
+Person::Person(string name, string bdate) {
     this->name = name;
     this->bdate = bdate;
-    this->ddate = L"";
+    this->ddate = "";
 }
 
-wstring Person::description() {
-    if (name != L"null") {
-        wstring dmessage = ddate == L"" ? L"" : L" alive/dead " + ddate;
-        wstring message = name + L" alive/dead " + bdate + dmessage + L"\n";
+string Person::description() {
+    if (name != "null") {
+        string dmessage = ddate == "" ? "" : " alive/dead " + ddate;
+        string message = name + " alive/dead " + bdate + dmessage + "\n";
         return message;
     }
     else {
-        return L"";
+        return "";
     }
 }
 
-wstring Person::short_description() {
-    wstring is_dead = ddate == L"" ? L"--------------" : ddate;
-    return name + L"\n" + bdate + L"\n" + is_dead;
+string Person::short_description() {
+    string is_dead = ddate == "" ? "--------------" : ddate;
+    return name + "\n" + bdate + "\n" + is_dead;
 }
 
-wstring Person::get_name() {
+string Person::get_name() {
     return this->name;
+}
+
+string Person::get_birth_date()
+{
+    return bdate;
 }
 
 bool Person::operator==(Person& other) {
