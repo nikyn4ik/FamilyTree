@@ -1,13 +1,12 @@
 #include "Tree.h"
 #include <iostream>
 #include <string>
-#include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
-#include <SFML/Window.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/VideoMode.hpp>
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 
@@ -94,32 +93,34 @@ void Tree::print_description()
 
 void Tree::show(int width, int height)
 {
-    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(width, height)), "Family Tree");
+    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(width, height)), "Family Tree", sf::Style::Titlebar | sf::Style::Close | sf::Style::Fullscreen);
+    window.clear(sf::Color::White);
+    window.setVerticalSyncEnabled(true);
+    window.setFramerateLimit(60);
 
-    //sf::Font font;
-    //if (!font.loadFromFile("arial.ttf"))
-    //{
-    //    std::cout << "Error loading font\n";
-    //    return;
-    //}
-    std::vector<std::vector<sf::CircleShape>> shapes;
+    sf::Font font;
+    if (!font.loadFromFile("C:\\Windows\\Fonts\\arial.ttf"))
+    {
+        std::cout << "Error loading font\n";
+        return;
+    }
+    std::vector<std::vector<sf::RectangleShape>> shapes;
     for (int i = 0; i < tree.size(); i++)
     {
-        std::vector<sf::CircleShape> generation;
+        std::vector<sf::RectangleShape> generation;
         std::vector<std::pair<Person, std::pair<Person, Person>>> family = tree[i];
         for (int j = 0; j < family.size(); j++)
         {
             Person p = family[j].first;
-            sf::CircleShape shape(30);
-            //shape.setPosition((i + 1) * width / (tree.size() + 1) - 30, (j + 1) * height / (family.size() + 1) - 30);
-            shape.setFillColor(sf::Color::White);
-            shape.setOutlineThickness(2);
-            shape.setOutlineColor(sf::Color::Black);
-            //sf::Text text(p.get_name(), font, 16);
-            //text.setPosition(shape.getPosition().x + shape.getRadius() - text.getGlobalBounds().width / 2, shape.getPosition().y + shape.getRadius() - text.getGlobalBounds().height / 2);
+            sf::RectangleShape shape(sf::Vector2f(60, 2)); 
+            shape.setPosition(sf::Vector2f((i + 1) * width / (tree.size() + 1) - 30, (j + 1) * height / (family.size() + 1) - 1));
+            shape.setFillColor(sf::Color::Black);
+            shape.setOutlineThickness(0);
+            sf::Text text(p.get_name(), font, 16);
+            text.setPosition(sf::Vector2f(shape.getPosition().x + shape.getSize().x / 2 - text.getGlobalBounds().width / 2, shape.getPosition().y + shape.getSize().y));
             generation.push_back(shape);
-            window.draw(shape);/*
-            window.draw(text);*/
+            window.draw(shape);
+            window.draw(text);
         }
         shapes.push_back(generation);
     }
@@ -129,8 +130,8 @@ void Tree::show(int width, int height)
         std::vector<std::pair<Person, std::pair<Person, Person>>> generation2 = tree[i + 1];
         for (int j = 0; j < generation1.size(); j++)
         {
-            sf::Vector2f p1 = shapes[i][j].getPosition() + sf::Vector2f(shapes[i][j].getRadius(), shapes[i][j].getRadius());
-            sf::Vector2f p2 = shapes[i + 1][j / 2].getPosition() + sf::Vector2f(shapes[i + 1][j / 2].getRadius(), 0);
+            sf::Vector2f p1 = shapes[i][j].getPosition() + sf::Vector2f(shapes[i][j].getSize().x / 2, shapes[i][j].getSize().y);
+            sf::Vector2f p2 = shapes[i + 1][j / 2].getPosition() + sf::Vector2f(shapes[i + 1][j / 2].getSize().x / 2, 0);
             sf::Vertex line[] =
             {
                 sf::Vertex(p1, sf::Color::Black),
@@ -147,6 +148,7 @@ void Tree::show(int width, int height)
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+        window.clear(sf::Color::White);
         window.display();
     }
 }
