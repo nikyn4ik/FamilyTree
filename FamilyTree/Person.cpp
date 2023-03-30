@@ -12,10 +12,14 @@ Person::Person(string name, string bdate) {
     this->ddate = "";
 }
 
-string Person::description() {
+string Person::description(bool include_dates) {
     if (name != "null") {
-        string dmessage = ddate == "" ? "" : " alive/dead " + ddate;
-        string message = name + " alive/dead " + bdate + dmessage + "\n";
+        string dmessage = "";
+        if (include_dates) {
+            dmessage = ddate == "" ? "" : " alive/dead " + ddate;
+            dmessage = " alive " + bdate + dmessage;
+        }
+        string message = name + dmessage + "\n";
         return message;
     }
     else {

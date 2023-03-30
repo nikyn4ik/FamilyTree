@@ -10,7 +10,8 @@ private:
 public:
     Person(string name, string bdate, string ddate);
     Person(string name, string bdate);
-    string description();
+    string description(bool include_dates);
+    //string description();
     string short_description();
     string get_name();
     string get_birth_date();
