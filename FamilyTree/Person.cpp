@@ -12,7 +12,7 @@ Person::Person(string name, string bdate) {
     this->ddate = "";
 }
 
-string Person::description(bool include_dates) {
+string Person::description(bool include_dates = true) {
     if (name != "null") {
         string dmessage = "";
         if (include_dates) {
