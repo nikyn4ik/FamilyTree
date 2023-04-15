@@ -1,8 +1,8 @@
 ﻿#include <iostream>
 #include <string>
 #include "Person.h"
-#include "Person.cpp"
 #include "Tree.h"
+#include <SFML/Graphics.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -11,59 +11,26 @@
 #include <SFML/Window/VideoMode.hpp>
 #include <fstream>
 
-void performTask()
+using namespace std;
+
+void selectfile() // выбор
 {
-    Tree t = Tree();
-
-    t.add_person(Person("Grandmother on mother's side", "20.11.1934")); //G0
-    t.add_person(Person("Grandfather on mother's side", "30.01.1935", "26.12.1993"));//G0
-    t.add_person(Person("Grandmother on father's side", "23.10.1944"));//G0
-    t.add_person(Person("Grandfather on father's side", "22.11.1945", "10.09.1996"));//G0
-
-    t.add_person(Person("Mother", "28.11.1967"), Person("Grandmother on mother's side", "20.11.1934"), Person("Grandfather on mother's side", "30.01.1935", "26.12.1993"));//G1
-    t.add_person(Person("Father", "01.12.1968", "02.08.2019"), Person("Grandmother on father's side", "23.10.1944"), Person("Grandfather on father's side", "22.11.1945", "10.09.1996"));//G1
-
-    t.add_person(Person("it's me", "01.03.2002"), Person("Mother", "28.11.1967"), Person("Father", "01.12.1968", "02.08.2019"));//G2
-
-    t.add_person(Person("My descendant from the future", "30.06.2934"), Person("it's me", "01.03.2002"));//G3
-
-    t.print_description();
-
-    t.show(1920, 1080);
-
     std::string filename;
-    std::cout << "Enter the filename to save to: ";
+    std::cout << "Enter file name or file path: ";
     std::cin >> filename;
 
-    std::ofstream file(filename);
+    std::ifstream file(filename);
 
     if (!file.is_open()) {
         std::cerr << "Failed to open file!" << std::endl;
     }
-
-    std::string line;
-    while (std::getline(std::cin, line)) {
-        file << line << std::endl;
+    else {
+        std::string line;
+        while (std::getline(file, line)) {
+            std::cout << line << std::endl;
+        }
+        file.close();
     }
-
-    file.close();
-
-    std::cout << "File saved successfully to " << filename << std::endl;
-}
-
-void selectfile()//выбор
-{
-    std::ifstream file("file.txt");
-
-    if (!file.is_open()) {
-        std::cerr << "Failed to open file!" << std::endl;
-    }
-
-    std::string line;
-    while (std::getline(file, line)) {
-        std::cout << line << std::endl;
-    }
-    file.close();
 }
 
 void compare() //сравнение
@@ -72,11 +39,11 @@ void compare() //сравнение
     std::cout << "Enter the name of the first file: ";
     std::cin >> filename1;
     std::ifstream file1(filename1);
-    
+
     if (!file1.is_open()) {
         std::cerr << "Failed to open file " << filename1 << std::endl;
     }
-    
+
     std::string filename2;
     std::cout << "Enter the name of the second file: ";
     std::cin >> filename2;
@@ -85,7 +52,7 @@ void compare() //сравнение
     if (!file2.is_open()) {
         std::cerr << "Failed to open file " << filename2 << std::endl;
     }
-    
+
     int num_generations1 = 0, num_generations2 = 0;
     std::string line;
     while (std::getline(file1, line)) {
@@ -98,7 +65,7 @@ void compare() //сравнение
             num_generations2++;
         }
     }
-    
+
     if (num_generations1 > num_generations2) {
         std::cout << filename1 << " has more generations (" << num_generations1 << " vs " << num_generations2 << ")" << std::endl;
     }
@@ -112,35 +79,77 @@ void compare() //сравнение
     file2.close();
 }
 
-int main() {
-    //setlocale(LC_ALL, "Russian");
+void files(Tree t) //работа с файлом
+{
+    t.print_description();
+    //t.show(1920, 1080);
+    std::string filename;
+    std::cout << "Enter the filename to save to: ";
+    std::cin >> filename;
 
-    char choice;
-    do {
+    std::ofstream file(filename);
+
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file!" << std::endl;
+        return;
+    }
+
+    std::streambuf* orig_cout = std::cout.rdbuf(); 
+    std::cout.rdbuf(file.rdbuf()); 
+    t.print_description();
+    std::cout.rdbuf(orig_cout);
+
+    file.close();
+
+    std::cout << "File saved successfully to " << filename << std::endl;
+}
+    
+int main() {
+
+	Tree t = Tree();
+
+	t.add_person(Person("Grandmother on mother's side", "20.11.1934")); //G0
+	t.add_person(Person("Grandfather on mother's side", "30.01.1935", "26.12.1993"));//G0
+	t.add_person(Person("Grandmother on father's side", "23.10.1944"));//G0
+	t.add_person(Person("Grandfather on father's side", "22.11.1945", "10.09.1996"));//G0
+
+	t.add_person(Person("Mother", "28.11.1967"), Person("Grandmother on mother's side", "20.11.1934"), Person("Grandfather on mother's side", "30.01.1935", "26.12.1993"));//G1
+	t.add_person(Person("Father", "01.12.1968", "02.08.2019"), Person("Grandmother on father's side", "23.10.1944"), Person("Grandfather on father's side", "22.11.1945", "10.09.1996"));//G1
+
+    int choice;
+    while (true) {
         std::cout << "Menu:\n";
-        std::cout << "a) Create a tree\n";
-        std::cout << "b) Select a file with a tree\n";
-        std::cout << "c) Compare two trees, select a txt file.\n";
-        std::cout << "d) Exit\n"; //Выход
-        std::cout << "Enter your choice (a, b, c or d ): "; //Выбор
-        std::cin >> choice;
+        std::cout << "1) Create a tree\n";
+        std::cout << "2) Select a file with a tree\n";
+        std::cout << "3) Compare two trees, select a txt file.\n";
+        std::cout << "4) Exit\n"; //Выход
+        std::cout << "Enter your choice (1, 2, 3 or 4): "; //Выбор
+        cin >> choice;
+
+        if (cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid choice. Please try again." << std::endl;
+            continue;
+        }
+
         switch (choice) {
-        case 'a':
-            performTask();
+        case 1:
+            files(t);
             break;
-        case 'b':
+        case 2:
             selectfile();
             break;
-        case 'c':
+        case 3:
             compare();
             break;
-        case 'd':
+        case 4:
             std::cout << "Exiting program." << std::endl; //Выход из программы
-            break;
+            return 0;
         default:
             std::cout << "Invalid choice. Please try again." << std::endl; //Неверный выбор (метод исключения).
             break;
         }
-    } while (choice != 'd');
+    }
     return 0;
 }

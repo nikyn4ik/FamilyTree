@@ -1,5 +1,6 @@
-#pragma once
 #include <iostream>
+#ifndef PERSON_H
+#define PERSON_H
 using namespace std;
 
 class Person {
@@ -17,3 +18,4 @@ public:
     string get_birth_date();
     bool operator==(Person& other);
 };
+#endif

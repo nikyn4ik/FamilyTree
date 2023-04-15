@@ -1,4 +1,5 @@
 #include "Tree.h"
+#include "Person.h"
 #include <iostream>
 #include <string>
 #include <SFML/Graphics/Text.hpp>

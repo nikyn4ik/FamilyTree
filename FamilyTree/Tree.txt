@@ -1,0 +1,32 @@
+Generation 0:
+  t.add_person(Person(L"Grandmother on mother's side", L"20.11.1934"));
+
+  t.add_person(Person(L"Grandfather on mother's side", L"30.01.1935"));
+
+  t.add_person(Person(L"Grandmother on father's side", L"23.10.1944"));
+
+  t.add_person(Person(L"Grandfather on father's side", L"22.11.1945"));
+
+Generation 1:
+t.add_person(Person(L"Mother", L"28.11.1967"), 
+  Parents: 
+    Person(L"Grandmother on mother's side", L"20.11.1934"), 
+    Person(L"Grandfather on mother's side", L"30.01.1935"));
+
+t.add_person(Person(L"Father", L"01.12.1968"), 
+  Parents: 
+    Person(L"Grandmother on father's side", L"23.10.1944"), 
+    Person(L"Grandfather on father's side", L"22.11.1945"));
+
+Generation 2:
+t.add_person(Person(L"it's me", L"01.03.2002"), 
+  Parents: 
+    Person(L"Mother", L"28.11.1967"), 
+    Person(L"Father", L"01.12.1968"));
+
+Generation 3:
+t.add_person(Person(L"My descendant from the future", L"30.06.2934"), 
+  Parents: 
+    Person(L"it's me", L"01.03.2002"), 
+    Person(L"null", L""));
+

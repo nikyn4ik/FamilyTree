@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TREE_H
+#define TREE_H
 #include <vector>
 #include "Person.h"
 using namespace std;
@@ -14,3 +15,4 @@ public:
     void print_description();
     void show(int width, int height);
 };
+#endif
