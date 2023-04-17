@@ -9,6 +9,7 @@ private:
     vector <vector<pair<Person, pair<Person, Person>>>> tree;
 public:
     Tree();
+    void clear() {};
     void add_person(Person p, Person father, Person mother); 
     void add_person(Person p, Person parent);
     void add_person(Person p);
