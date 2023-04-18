@@ -82,7 +82,7 @@ void compare() //сравнение
 void files(Tree t) //работа с файлом
 {
     t.print_description();
-    //t.show(1920, 1080);
+    t.show(1920, 1080);
     std::string filename;
     std::cout << "Enter the filename to save to: ";
     std::cin >> filename;
