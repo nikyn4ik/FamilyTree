@@ -7,6 +7,9 @@ using namespace std;
 class Tree {
 private:
     vector <vector<pair<Person, pair<Person, Person>>>> tree;
+    std::string familyTreeName;
+    std::vector<Person*> people;
+    
 public:
     Tree();
     void clear() {};
