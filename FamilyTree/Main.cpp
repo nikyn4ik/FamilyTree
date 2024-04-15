@@ -108,17 +108,17 @@ int main() {
 
     Tree t = Tree();
 
-    t.add_person(Person("Grandmother on mother's side", "20.11.1934")); //G0
-    t.add_person(Person("Grandfather on mother's side", "30.01.1935", "26.12.1993"));//G0
+    t.add_person(Person("Grandmother on mother's side", "10.10.1944")); //G0
+    t.add_person(Person("Grandfather on mother's side", "10.01.1945", "20.12.1980"));//G0
     t.add_person(Person("Grandmother on father's side", "23.10.1944"));//G0
     t.add_person(Person("Grandfather on father's side", "22.11.1945", "10.09.1996"));//G0
     //удаление последних двух строк
-    t.add_person(Person("Mother", "28.11.1967"), Person("Grandmother on mother's side", "20.11.1934"), Person("Grandfather on mother's side", "30.01.1935", "26.12.1993"));//G1
-    t.add_person(Person("Father", "01.12.1968", "02.08.2019"), Person("Grandmother on father's side", "23.10.1944"), Person("Grandfather on father's side", "22.11.1945", "10.09.1996"));//G1
+    t.add_person(Person("Mother", "20.10.1960"), Person("Grandmother on mother's side", "10.10.1944"), Person("Grandfather on mother's side", "10.01.1945", "20.12.1980"));//G1
+    t.add_person(Person("Father", "01.01.1980", "01.01.2010"), Person("Grandmother on father's side", "23.10.1944"), Person("Grandfather on father's side", "22.11.1945", "10.09.1996"));//G1
 
-    t.add_person(Person("it's me", "01.03.2002"), Person("Mother", "28.11.1967"), Person("Father", "01.12.1968", "02.08.2019"));//G2
+    t.add_person(Person("it's me", "01.01.2000"), Person("Mother", "20.10.1960"), Person("Father", "01.01.1980", "01.01.2010"));//G2
 
-    t.add_person(Person("My descendant from the future", "30.06.2934"), Person("it's me", "01.03.2002"));//G3
+    t.add_person(Person("My descendant from the future", "30.06.2934"), Person("it's me", "01.01.2000"));//G3
 
     int choice;
     while (true) {
